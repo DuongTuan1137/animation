@@ -19,6 +19,7 @@ class CardModel {
             let cardTwo = Card()
             cardTwo.imageName = "card\(randomNumber)"
             generatedCardArray.append(cardTwo)
+            generatedCardArray.shuffle()
         }
         return generatedCardArray
     }

@@ -16,17 +16,18 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
     var arrCard = [Card]()
     var firstFlipedCardIndex : IndexPath?
     var timer : Timer?
-    var milliseconds : Float = 10 * 1000
+    var milliseconds : Float = 15 * 1000
     
     override func viewDidLoad() {
         super.viewDidLoad()
         arrCard = model.getCard()
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.isScrollEnabled = false
         timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(timerElapsed), userInfo: nil, repeats: true)
         RunLoop.main.add(timer!, forMode: .common)
-       
     }
+    
     @objc func timerElapsed() {
         milliseconds -= 1
         let seconds = String(format: "%.2f", milliseconds/1000)
@@ -48,6 +49,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         cell.setCard(card: card)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if milliseconds <= 0 {
             return
@@ -65,6 +67,7 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
             }
         }
     }
+    
     func checkForMatches(secondFlipedCardIndex: IndexPath){
         let cardOneCell = collectionView.cellForItem(at: firstFlipedCardIndex!) as? CardCollectionViewCell
         let cardTwoCell = collectionView.cellForItem(at: secondFlipedCardIndex) as? CardCollectionViewCell
@@ -126,4 +129,21 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
         present(alert, animated: true, completion: nil)
     }
 }
+
+extension ViewController : UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let withCollectionView = collectionView.bounds.width
+        let heightCollectionView = collectionView.bounds.height
+        
+        return CGSize(width: (withCollectionView-20)/3, height: (heightCollectionView - 30)/4)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
+    }
+}
+
+
 
