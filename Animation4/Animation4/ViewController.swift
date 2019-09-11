@@ -132,10 +132,10 @@ class ViewController: UIViewController,UICollectionViewDataSource,UICollectionVi
 
 extension ViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let withCollectionView = collectionView.bounds.width
-        let heightCollectionView = collectionView.bounds.height
+        let widthCell = collectionView.bounds.width
+        let heightCell = collectionView.bounds.height
         
-        return CGSize(width: (withCollectionView-20)/3, height: (heightCollectionView - 30)/4)
+        return CGSize(width: (widthCell-20)/3, height: (heightCell - 30)/4)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
